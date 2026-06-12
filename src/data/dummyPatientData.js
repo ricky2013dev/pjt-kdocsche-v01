@@ -1,0 +1,21 @@
+export const dummyPatientData = {
+  firstName: "John",
+  lastName: "Smith",
+  dob: "1985-06-15",
+  email: "john.smith@email.com",
+  phone: "(555) 123-4567",
+  insuranceProvider: "Blue Cross Blue Shield",
+  policyId: "BCBS123456789",
+  groupNumber: "GRP-98765",
+  patientNotes: "I've been experiencing mild headaches for the past week. Would like to discuss treatment options and preventive measures.",
+  checklist: {
+    symptoms: false,
+    medicalHistory: false,
+    medications: false,
+    allergies: false,
+    consent: false,
+    emergencyContact: false,
+    privacy: false,
+    accuracy: false,
+  },
+};

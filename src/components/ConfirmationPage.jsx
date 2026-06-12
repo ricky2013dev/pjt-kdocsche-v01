@@ -13,7 +13,7 @@ const ConfirmationPage = ({ selectedSlot, patientData, onReset }) => {
         </div>
 
         <div className="bg-gray-50 p-4 md:p-8 rounded-lg max-w-2xl mx-auto text-left mb-6 md:mb-8">
-          <h3 className="text-lg md:text-xl font-bold text-indigo-600 mb-4 md:mb-6">Appointment Summary</h3>
+          <h3 className="text-lg md:text-xl font-bold text-green-600 mb-4 md:mb-6">Appointment Summary</h3>
 
           <div className="space-y-3 md:space-y-4">
             <div className="flex justify-between items-center pb-3 md:pb-4 border-b border-gray-300 text-sm md:text-base">

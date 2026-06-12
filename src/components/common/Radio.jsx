@@ -20,7 +20,7 @@ const Radio = ({
         value={value}
         checked={checked}
         onChange={onChange}
-        className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 focus:ring-2 mr-3 cursor-pointer"
+        className="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500 focus:ring-2 mr-3 cursor-pointer"
         {...props}
       />
       <span className="text-gray-700">{label}</span>

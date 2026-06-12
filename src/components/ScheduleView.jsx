@@ -93,7 +93,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
         <div
           key={day}
           className={`border border-gray-300 md:border-2 rounded md:rounded-lg p-1 md:p-3 min-h-[80px] md:min-h-[120px] ${
-            isToday ? 'bg-indigo-50' : 'bg-white'
+            isToday ? 'bg-green-50' : 'bg-white'
           }`}
         >
           <div className="font-bold text-gray-700 mb-1 text-xs md:text-base">{day}</div>
@@ -104,10 +104,11 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
             <div
               key={idx}
               onClick={() => handleSlotClick(slot)}
-              className={`text-[9px] md:text-xs py-0.5 md:py-1 px-0.5 md:px-2 my-0.5 md:my-1 rounded transition-all leading-tight ${
+              title={slot.available ? `Click to book appointment at ${slot.time}` : 'Time slot not available'}
+              className={`text-[9px] md:text-xs py-0.5 md:py-1 px-0.5 md:px-2 my-0.5 md:my-1 rounded-md transition-all leading-tight font-semibold border ${
                 slot.available
-                  ? 'bg-green-500 text-white cursor-pointer hover:bg-green-600 active:bg-green-700'
-                  : 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                  ? 'bg-green-500 text-white cursor-pointer hover:bg-green-600 hover:shadow-md hover:scale-102 border-green-600'
+                  : 'bg-gray-300 text-gray-600 cursor-not-allowed border-gray-400'
               }`}
             >
               {slot.available ? (isMobile ? slot.time.replace(' ', '') : slot.time) : (isMobile ? 'N/A' : `${slot.time} - N/A`)}
@@ -192,17 +193,29 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
           <div
             key={`slot-${timeIdx}-${i}`}
             onClick={() => handleSlotClick(slot)}
-            className={`p-1 md:p-2 border border-gray-200 min-h-[35px] md:min-h-[40px] transition-all text-center text-[10px] md:text-xs ${
+            title={isAvailable ? 'Click to book this appointment' : isSunday && !isPast ? 'Office closed on Sundays' : isWeekday && !isPast ? 'Time slot not available' : ''}
+            className={`p-1 md:p-2 border min-h-[35px] md:min-h-[40px] transition-all text-center text-[9px] md:text-xs font-semibold flex items-center justify-center ${
               isAvailable
-                ? 'bg-green-200 cursor-pointer hover:bg-green-500 hover:text-white'
+                ? 'bg-green-500 text-white cursor-pointer hover:bg-green-600 hover:shadow-lg hover:scale-105 border-green-600 rounded-md'
                 : isSunday && !isPast
-                ? 'bg-red-100 text-red-600 cursor-not-allowed'
+                ? 'bg-red-100 text-red-600 cursor-not-allowed border-red-200'
                 : isWeekday && !isPast
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                : 'bg-white'
+                ? 'bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300'
+                : 'bg-white border-gray-200'
             }`}
           >
-            {isAvailable ? '✓' : isSunday && !isPast ? 'Closed' : isWeekday && !isPast ? 'N/A' : ''}
+            {isAvailable ? (
+              <>
+                <span className="hidden md:inline">Book</span>
+                <span className="md:hidden">✓</span>
+              </>
+            ) : isSunday && !isPast ? (
+              'Closed'
+            ) : isWeekday && !isPast ? (
+              'N/A'
+            ) : (
+              ''
+            )}
           </div>
         );
       }
@@ -219,13 +232,16 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
 
   return (
     <Card>
-      <h2 className="text-xl md:text-3xl font-bold text-indigo-600 mb-3 md:mb-6">
+      <h2 className="text-xl md:text-3xl font-bold text-green-600 mb-3 md:mb-6">
         Select Your Appointment Time
       </h2>
 
       <div className="mb-3 md:mb-4 p-2 md:p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
         <p className="text-[11px] md:text-sm text-blue-800 leading-snug md:leading-normal">
-          <strong>Tap green slot</strong> to book. Gray = not available.
+          <strong>Click green "Book" buttons</strong> to reserve your appointment. Hover to see details. Gray slots are unavailable.
+        </p>
+        <p className="text-[10px] md:text-xs text-blue-700 leading-snug md:leading-normal mt-1">
+          녹색 "Book" 버튼을 클릭하여 예약하세요. 마우스를 올려 세부정보를 확인하세요. 회색 슬롯은 예약 불가능합니다.
         </p>
       </div>
 

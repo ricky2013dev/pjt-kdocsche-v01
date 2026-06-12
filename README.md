@@ -1,4 +1,4 @@
-# Doctor Appointment Scheduling Application
+# K Doctor 예약 Application
 
 A modern, responsive web application for scheduling doctor appointments built with React, Vite, and Tailwind CSS.
 
@@ -174,5 +174,5 @@ MIT
 
 ## Created From PRD
 
-This application was built according to the Product Requirements Document (PRD) specifications for a Doctor Appointment Scheduling Web Application.
+This application was built according to the Product Requirements Document (PRD) specifications for a Doctor Appointment Web Application.
 # pjt-kdocsche-v01

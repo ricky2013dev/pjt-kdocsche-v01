@@ -20,7 +20,7 @@ const Checkbox = ({
           name={name}
           checked={checked}
           onChange={onChange}
-          className="w-4 h-4 md:w-5 md:h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 focus:ring-2 mr-2 md:mr-3 cursor-pointer mt-0.5 md:mt-0 flex-shrink-0"
+          className="w-4 h-4 md:w-5 md:h-5 text-green-600 border-gray-300 rounded focus:ring-green-500 focus:ring-2 mr-2 md:mr-3 cursor-pointer mt-0.5 md:mt-0 flex-shrink-0"
           {...props}
         />
         <span className="text-gray-700 text-sm md:text-base leading-snug md:leading-normal">{label}</span>

@@ -1,91 +1,91 @@
-import { useState } from 'react';
-import { Input, Button, Checkbox, Textarea, FormSection, Card, Tabs } from './common';
+import { useState } from "react";
+import {
+  Input,
+  Button,
+  Checkbox,
+  Textarea,
+  FormSection,
+  Card,
+  Tabs,
+} from "./common";
+import { dummyPatientData } from "../data/dummyPatientData";
 
 const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
-  const [activeTab, setActiveTab] = useState('personal');
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    dob: '',
-    email: '',
-    phone: '',
-    insuranceProvider: '',
-    policyId: '',
-    groupNumber: '',
-    patientNotes: '',
-    checklist: {
-      symptoms: false,
-      consent: false,
-      privacy: false,
-      accuracy: false
-    }
-  });
+  const [activeTab, setActiveTab] = useState("personal");
+  const [formData, setFormData] = useState(dummyPatientData);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handlePhoneChange = (e) => {
-    let value = e.target.value.replace(/\D/g, '');
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 0) {
       if (value.length <= 3) {
         value = `(${value}`;
       } else if (value.length <= 6) {
         value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
       } else {
-        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
+          6,
+          10
+        )}`;
       }
     }
-    setFormData(prev => ({ ...prev, phone: value }));
+    setFormData((prev) => ({ ...prev, phone: value }));
   };
 
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       checklist: {
         ...prev.checklist,
-        [name]: checked
-      }
+        [name]: checked,
+      },
     }));
   };
 
   const handleCheckAll = (e) => {
     const checked = e.target.checked;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       checklist: {
         symptoms: checked,
+        medicalHistory: checked,
+        medications: checked,
+        allergies: checked,
         consent: checked,
+        emergencyContact: checked,
         privacy: checked,
-        accuracy: checked
-      }
+        accuracy: checked,
+      },
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const allChecked = Object.values(formData.checklist).every(val => val);
+    const allChecked = Object.values(formData.checklist).every((val) => val);
     if (!allChecked) {
-      alert('Please complete all items in the Medical History Pre-Checklist');
-      setActiveTab('medical');
+      alert("Please complete all items in the Medical Pre-Checklist");
+      setActiveTab("medical");
       return;
     }
 
     if (!isPersonalInfoComplete()) {
-      alert('Please complete all required personal information');
-      setActiveTab('personal');
+      alert("Please complete all required personal information");
+      setActiveTab("personal");
       return;
     }
 
     if (!isInsuranceInfoComplete()) {
-      alert('Please complete all required insurance information');
-      setActiveTab('insurance');
+      alert("Please complete all required insurance information");
+      setActiveTab("insurance");
       return;
     }
 
@@ -93,8 +93,13 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
   };
 
   const isPersonalInfoComplete = () => {
-    return formData.firstName && formData.lastName && formData.dob &&
-           formData.email && formData.phone;
+    return (
+      formData.firstName &&
+      formData.lastName &&
+      formData.dob &&
+      formData.email &&
+      formData.phone
+    );
   };
 
   const isInsuranceInfoComplete = () => {
@@ -102,69 +107,76 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
   };
 
   const isMedicalChecklistComplete = () => {
-    return Object.values(formData.checklist).every(val => val);
+    return Object.values(formData.checklist).every((val) => val);
   };
 
-  const allChecklistChecked = Object.values(formData.checklist).every(val => val);
+  const allChecklistChecked = Object.values(formData.checklist).every(
+    (val) => val
+  );
 
   const tabs = [
     {
-      id: 'personal',
-      label: 'Personal Info',
+      id: "personal",
+      label: "Personal Info",
       required: true,
-      completed: isPersonalInfoComplete()
+      completed: isPersonalInfoComplete(),
     },
     {
-      id: 'insurance',
-      label: 'Insurance',
+      id: "insurance",
+      label: "Insurance",
       required: true,
-      completed: isInsuranceInfoComplete()
+      completed: isInsuranceInfoComplete(),
     },
     {
-      id: 'medical',
-      label: 'Medical History',
+      id: "medical",
+      label: "Medical Checklist",
       required: true,
-      completed: isMedicalChecklistComplete()
+      completed: isMedicalChecklistComplete(),
     },
     {
-      id: 'notes',
-      label: 'Notes',
+      id: "notes",
+      label: "Notes",
       required: false,
-      completed: formData.patientNotes.length > 0
-    }
+      completed: formData.patientNotes.length > 0,
+    },
   ];
 
   const handleNextTab = () => {
-    const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+    const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex < tabs.length - 1) {
       setActiveTab(tabs[currentIndex + 1].id);
     }
   };
 
   const handlePreviousTab = () => {
-    const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+    const currentIndex = tabs.findIndex((tab) => tab.id === activeTab);
     if (currentIndex > 0) {
       setActiveTab(tabs[currentIndex - 1].id);
     }
   };
 
-  const isLastTab = activeTab === 'notes';
-  const isFirstTab = activeTab === 'personal';
+  const isLastTab = activeTab === "notes";
+  const isFirstTab = activeTab === "personal";
 
   return (
     <Card>
-      <h2 className="text-xl md:text-3xl font-bold text-indigo-600 mb-3 md:mb-6">Patient Information</h2>
+      <h2 className="text-xl md:text-3xl font-bold text-green-600 mb-3 md:mb-6">
+        Patient Information
+      </h2>
 
       <div className="bg-teal-50 border-l-4 border-teal-500 p-2 md:p-4 mb-3 md:mb-6 rounded">
-        <h3 className="text-xs md:text-base font-semibold text-teal-900 mb-0.5 md:mb-1">Selected Time</h3>
-        <p className="text-xs md:text-base text-teal-800">{selectedSlot?.datetime}</p>
+        <h3 className="text-xs md:text-base font-semibold text-teal-900 mb-0.5 md:mb-1">
+          Selected Time
+        </h3>
+        <p className="text-xs md:text-base text-teal-800">
+          {selectedSlot?.datetime}
+        </p>
       </div>
 
       <form onSubmit={handleSubmit}>
         <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab}>
-
           {/* Personal Information Tab */}
-          {activeTab === 'personal' && (
+          {activeTab === "personal" && (
             <FormSection title="Personal Information">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <Input
@@ -222,7 +234,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
           )}
 
           {/* Insurance Information Tab */}
-          {activeTab === 'insurance' && (
+          {activeTab === "insurance" && (
             <FormSection title="Insurance Information">
               <div className="mb-4">
                 <Input
@@ -256,11 +268,15 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
           )}
 
           {/* Medical History Tab */}
-          {activeTab === 'medical' && (
+          {activeTab === "medical" && (
             <FormSection>
               <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3 md:mb-4">
-                Medical History Pre-Checklist <span className="text-red-500">*</span>
+                Medical Pre-Checklist <span className="text-red-500">*</span>
               </h3>
+
+              <p className="text-xs md:text-sm text-gray-600 mb-4">
+                Please review and acknowledge the following items before your visit:
+              </p>
 
               <div className="space-y-2 mb-4">
                 <Checkbox
@@ -268,7 +284,31 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
                   name="symptoms"
                   checked={formData.checklist.symptoms}
                   onChange={handleCheckboxChange}
-                  label="I acknowledge any current symptoms or health concerns"
+                  label="I have reviewed and will disclose all current symptoms, health concerns, and reasons for this visit"
+                />
+
+                <Checkbox
+                  id="medicalHistory"
+                  name="medicalHistory"
+                  checked={formData.checklist.medicalHistory}
+                  onChange={handleCheckboxChange}
+                  label="I will provide complete medical history including past illnesses, surgeries, and chronic conditions"
+                />
+
+                <Checkbox
+                  id="medications"
+                  name="medications"
+                  checked={formData.checklist.medications}
+                  onChange={handleCheckboxChange}
+                  label="I will disclose all current medications, vitamins, and supplements I am taking"
+                />
+
+                <Checkbox
+                  id="allergies"
+                  name="allergies"
+                  checked={formData.checklist.allergies}
+                  onChange={handleCheckboxChange}
+                  label="I will report any known allergies to medications, foods, or other substances"
                 />
 
                 <Checkbox
@@ -276,7 +316,15 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
                   name="consent"
                   checked={formData.checklist.consent}
                   onChange={handleCheckboxChange}
-                  label="I consent to medical treatment and examination"
+                  label="I consent to medical examination, treatment, and diagnostic procedures as recommended by the physician"
+                />
+
+                <Checkbox
+                  id="emergencyContact"
+                  name="emergencyContact"
+                  checked={formData.checklist.emergencyContact}
+                  onChange={handleCheckboxChange}
+                  label="I understand that I may be asked to provide emergency contact information during my visit"
                 />
 
                 <Checkbox
@@ -284,7 +332,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
                   name="privacy"
                   checked={formData.checklist.privacy}
                   onChange={handleCheckboxChange}
-                  label="I have read and agree to the Privacy Policy"
+                  label="I have read and agree to the HIPAA Privacy Policy and Notice of Privacy Practices"
                 />
 
                 <Checkbox
@@ -292,23 +340,25 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
                   name="accuracy"
                   checked={formData.checklist.accuracy}
                   onChange={handleCheckboxChange}
-                  label="I confirm all information provided is accurate"
+                  label="I confirm that all information provided is true, accurate, and complete to the best of my knowledge"
                 />
               </div>
 
-              <Checkbox
-                id="checkAll"
-                name="checkAll"
-                checked={allChecklistChecked}
-                onChange={handleCheckAll}
-                label="Check All"
-                className="bg-indigo-50"
-              />
+              <div className="border-t pt-4 mt-4">
+                <Checkbox
+                  id="checkAll"
+                  name="checkAll"
+                  checked={allChecklistChecked}
+                  onChange={handleCheckAll}
+                  label="I acknowledge and agree to all of the above"
+                  className="bg-green-50 font-semibold"
+                />
+              </div>
             </FormSection>
           )}
 
           {/* Additional Notes Tab */}
-          {activeTab === 'notes' && (
+          {activeTab === "notes" && (
             <FormSection title="Additional Notes (Optional)">
               <Textarea
                 label="Reason for visit or special accommodations"
@@ -321,7 +371,6 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
               />
             </FormSection>
           )}
-
         </Tabs>
 
         {/* Tab Navigation Buttons */}
