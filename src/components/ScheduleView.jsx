@@ -87,12 +87,11 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
       const currentDate = new Date(year, month, day);
       currentDate.setHours(0, 0, 0, 0);
       const isToday = currentDate.getTime() === today.getTime();
-      const isWeekday =
-        currentDate.getDay() !== 0 && currentDate.getDay() !== 6;
+      const isSunday = currentDate.getDay() === 0;
       const isPast = currentDate < today;
 
       const slots =
-        isWeekday && !isPast ? generateTimeSlots(currentDate, day) : [];
+        !isSunday && !isPast ? generateTimeSlots(currentDate, day) : [];
 
       days.push(
         <div
@@ -105,7 +104,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
             {day}
           </div>
           {slots.length === 0 && !isPast && (
-            <div className="text-[10px] md:text-xs text-gray-400 py-1">
+            <div className="text-xs md:text-sm text-gray-400 py-1">
               No slots
             </div>
           )}
@@ -118,7 +117,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
                   ? `Click to book appointment at ${slot.time}`
                   : "Time slot not available"
               }
-              className={`text-[9px] md:text-xs py-0.5 md:py-1 px-0.5 md:px-2 my-0.5 md:my-1 rounded-md transition-all leading-tight font-semibold border ${
+              className={`text-xs md:text-sm py-0.5 md:py-1 px-0.5 md:px-2 my-0.5 md:my-1 rounded-md transition-all leading-tight font-semibold border ${
                 slot.available
                   ? "bg-green-500 text-white cursor-pointer hover:bg-green-600 hover:shadow-md hover:scale-102 border-green-600"
                   : "bg-gray-300 text-gray-600 cursor-not-allowed border-gray-400"
@@ -191,10 +190,10 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
       elements.push(
         <div
           key={`time-${timeIdx}`}
-          className="p-1 md:p-2 text-[10px] md:text-xs font-medium text-gray-600 text-right border-r-2 border-gray-300"
+          className="p-0.5 md:p-2 text-[11px] md:text-sm font-medium text-gray-600 text-right border-r-2 border-gray-300 flex items-center justify-end"
         >
           <div className="hidden md:block">{time}</div>
-          <div className="md:hidden">{time.replace(" ", "")}</div>
+          <div className="md:hidden leading-tight">{time.replace(" ", "")}</div>
         </div>
       );
 
@@ -203,12 +202,10 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
         date.setDate(weekStart.getDate() + i);
         date.setHours(0, 0, 0, 0);
         const isSunday = date.getDay() === 0;
-        const isSaturday = date.getDay() === 6;
-        const isWeekday = !isSunday && !isSaturday;
         const isPast = date < todayDate;
 
-        // Randomly determine if slot is available (60% chance for weekdays, future dates)
-        const isAvailable = isWeekday && !isPast && Math.random() > 0.4;
+        // Randomly determine if slot is available (60% chance for open days, future dates)
+        const isAvailable = !isSunday && !isPast && Math.random() > 0.4;
 
         const slot = {
           date: date.toDateString(),
@@ -224,18 +221,18 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
             title={
               isAvailable
                 ? "Click to book this appointment"
+                : !isSunday && !isPast
+                ? "Time slot not available"
                 : isSunday && !isPast
-                ? "Office closed on Sundays"
-                : isWeekday && !isPast
                 ? "Time slot not available"
                 : ""
             }
-            className={`p-1 md:p-2 border min-h-[35px] md:min-h-[40px] transition-all text-center text-[9px] md:text-xs font-semibold flex items-center justify-center ${
+            className={`p-1 md:p-2 border min-h-[35px] md:min-h-[40px] transition-all text-center text-xs md:text-sm font-semibold flex items-center justify-center ${
               isAvailable
                 ? "bg-green-500 text-white cursor-pointer hover:bg-green-600 hover:shadow-lg hover:scale-105 border-green-600 rounded-md"
+                : !isSunday && !isPast
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300"
                 : isSunday && !isPast
-                ? "bg-red-100 text-red-600 cursor-not-allowed border-red-200"
-                : isWeekday && !isPast
                 ? "bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300"
                 : "bg-white border-gray-200"
             }`}
@@ -245,9 +242,9 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
                 <span className="hidden md:inline">Book</span>
                 <span className="md:hidden text-base font-bold">+</span>
               </>
+            ) : !isSunday && !isPast ? (
+              "N/A"
             ) : isSunday && !isPast ? (
-              "Closed"
-            ) : isWeekday && !isPast ? (
               "N/A"
             ) : (
               ""
@@ -274,16 +271,9 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
 
   return (
     <Card>
-      <h2 className="text-xl md:text-3xl font-bold text-green-600 mb-3 md:mb-6">
-        Select Your Appointment Time
-      </h2>
-
       <div className="mb-3 md:mb-4 p-2 md:p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
-        <p className="text-[11px] md:text-sm text-blue-800 leading-snug md:leading-normal">
-          <strong>Click green "Book" buttons</strong> to reserve
-        </p>
-        <p className="text-[10px] md:text-xs text-blue-700 leading-snug md:leading-normal mt-1">
-          녹색 "Book" 버튼을 클릭하여 예약하세요.
+        <p className="text-xs md:text-sm text-blue-700 leading-snug md:leading-normal mt-1">
+          원하시는 시간을 클릭한후 예약하세요.
         </p>
       </div>
 
@@ -350,7 +340,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
 
       {view === "monthly" ? (
         <>
-          <div className="grid grid-cols-7 gap-0.5 md:gap-2 mb-1 md:mb-2 font-bold text-center text-[10px] md:text-base text-gray-600">
+          <div className="grid grid-cols-7 gap-0.5 md:gap-2 mb-1 md:mb-2 font-bold text-center text-xs md:text-base text-gray-600">
             <div className="hidden md:block">Sun</div>
             <div className="hidden md:block">Mon</div>
             <div className="hidden md:block">Tue</div>
@@ -375,7 +365,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
           <div
             className={`grid gap-[2px] md:gap-1 ${
               isMobile
-                ? "grid-cols-[50px_repeat(7,1fr)]"
+                ? "grid-cols-[68px_repeat(7,1fr)]"
                 : "grid-cols-[100px_repeat(7,1fr)]"
             }`}
           >
@@ -385,7 +375,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
       )}
 
       <div className="mt-3 md:mt-6 p-2 md:p-4 bg-gray-50 rounded-lg">
-        <div className="flex items-center gap-2 md:gap-6 justify-center text-[10px] md:text-sm flex-wrap">
+        <div className="flex items-center gap-2 md:gap-6 justify-center text-xs md:text-sm flex-wrap">
           <div className="flex items-center gap-1 md:gap-2">
             <div className="w-2.5 h-2.5 md:w-4 md:h-4 bg-green-500 rounded"></div>
             <span>Available</span>
@@ -393,10 +383,6 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext }) => {
           <div className="flex items-center gap-1 md:gap-2">
             <div className="w-2.5 h-2.5 md:w-4 md:h-4 bg-gray-300 rounded"></div>
             <span>Not Available</span>
-          </div>
-          <div className="flex items-center gap-1 md:gap-2">
-            <div className="w-2.5 h-2.5 md:w-4 md:h-4 bg-red-100 border border-red-300 rounded"></div>
-            <span>Closed</span>
           </div>
         </div>
       </div>

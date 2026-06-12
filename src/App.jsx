@@ -40,19 +40,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
-      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-7xl">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col">
+      <div className="container mx-auto px-3 md:px-4 py-4 md:py-8 max-w-7xl flex-grow">
         <header className="bg-gradient-to-r from-green-600 to-teal-700 text-white rounded-lg shadow-xl p-4 md:p-8 mb-4 md:mb-8">
-          {/* Navigation Menu */}
-          <nav className="flex justify-end mb-3 md:mb-4">
-            <button
-              onClick={() => setShowAboutUs(!showAboutUs)}
-              className="text-white hover:bg-white hover:bg-opacity-20 px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition-all text-xs md:text-sm font-medium"
-            >
-              {showAboutUs ? "Home" : "About Us"}
-            </button>
-          </nav>
-
           <div className="text-center">
             <div className="flex items-center justify-center gap-3 md:gap-4 mb-1 md:mb-2">
               <div className="bg-gradient-to-br from-green-400 to-green-600 rounded-full p-2 md:p-3 shadow-lg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
@@ -97,15 +87,9 @@ function App() {
                 </svg>
               </div>
               <h1 className="text-lg sm:text-2xl md:text-4xl font-bold leading-tight">
-                K Doctor Online Scheduling
+                K Doctor Online
               </h1>
             </div>
-            <p className="text-xs sm:text-sm md:text-lg mt-2">
-              Book your appointment in 2 easy steps
-            </p>
-            <p className="text-xs md:text-base mt-1 opacity-90">
-              2단계로 간편하게 예약하세요
-            </p>
           </div>
         </header>
 
@@ -139,6 +123,23 @@ function App() {
           </>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-green-600 to-teal-700 text-white py-4 md:py-6 mt-8">
+        <div className="container mx-auto px-3 md:px-4 max-w-7xl">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 md:gap-4">
+            <p className="text-xs md:text-sm text-center md:text-left">
+              © 2026 K Doctor Online. All rights reserved.
+            </p>
+            <button
+              onClick={() => setShowAboutUs(!showAboutUs)}
+              className="text-white hover:bg-white hover:bg-opacity-20 px-3 md:px-4 py-1.5 md:py-2 rounded-lg transition-all text-xs md:text-sm font-medium"
+            >
+              {showAboutUs ? "← Back to Home" : "About Us"}
+            </button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

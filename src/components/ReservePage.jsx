@@ -165,10 +165,10 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
       </h2>
 
       <div className="bg-teal-50 border-l-4 border-teal-500 p-2 md:p-4 mb-3 md:mb-6 rounded">
-        <h3 className="text-xs md:text-base font-semibold text-teal-900 mb-0.5 md:mb-1">
+        <h3 className="text-sm md:text-lg font-semibold text-teal-900 mb-0.5 md:mb-1">
           Selected Time
         </h3>
-        <p className="text-xs md:text-base text-teal-800">
+        <p className="text-sm md:text-base text-teal-800">
           {selectedSlot?.datetime}
         </p>
       </div>
@@ -274,7 +274,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit }) => {
                 Medical Pre-Checklist <span className="text-red-500">*</span>
               </h3>
 
-              <p className="text-xs md:text-sm text-gray-600 mb-4">
+              <p className="text-sm md:text-base text-gray-600 mb-4">
                 Please review and acknowledge the following items before your visit:
               </p>
 
