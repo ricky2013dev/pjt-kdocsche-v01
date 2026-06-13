@@ -1,0 +1,239 @@
+{
+  "timestamp": "2026-06-13T17:16:50.460Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-06-13T17:16:42.268Z",
+    "activeFeatures": [
+      "pjt-kdocsche-v01",
+      "data"
+    ],
+    "primaryFeature": "pjt-kdocsche-v01",
+    "features": {
+      "pjt-kdocsche-v01": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-06-13T16:21:16.536Z",
+          "lastUpdated": "2026-06-13T17:16:42.268Z"
+        },
+        "lastFile": "/Users/rickyworkDev/sp-sample-01/pjt-kdocsche-v01/src/components/ReservePage.jsx"
+      },
+      "data": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-06-13T16:33:59.191Z",
+          "lastUpdated": "2026-06-13T16:51:56.315Z"
+        },
+        "lastFile": "/Users/rickyworkDev/sp-sample-01/pjt-kdocsche-v01/src/data/doctors.js"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-06-13T16:03:58.246Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-06-13T17:16:42.268Z"
+    },
+    "history": [
+      {
+        "timestamp": "2026-06-13T16:21:16.536Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:27:17.101Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:27:45.166Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:32:06.055Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:32:10.871Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:33:09.239Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:33:59.191Z",
+        "feature": "data",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:34:04.018Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:35:40.767Z",
+        "feature": "data",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:36:04.145Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:51:56.315Z",
+        "feature": "data",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:52:25.912Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:52:31.665Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:52:36.301Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:52:42.644Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T16:58:54.179Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:04:13.876Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:08:11.573Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:08:30.124Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:08:39.677Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:08:52.710Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:09:26.548Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:09:31.621Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:09:38.535Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:14:23.147Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:15:45.759Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:16:11.506Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:16:16.211Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:16:23.376Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:16:34.245Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      },
+      {
+        "timestamp": "2026-06-13T17:16:42.268Z",
+        "feature": "pjt-kdocsche-v01",
+        "phase": "do",
+        "action": "updated"
+      }
+    ]
+  }
+}

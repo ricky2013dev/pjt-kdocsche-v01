@@ -12,7 +12,7 @@ export const doctors = [
     education: [
       { year: "1995", title: "00대학교 의과대학 졸업 (M.D.)" },
       { year: "1999", title: "00대학교병원 가정의학과 전공의 수료" },
-      { year: "2002", title: "University of Texas Southwestern 의학 연수" },
+      { year: "2002", title: "University of 00 의학 연수" },
     ],
     career: [
       { year: "2002 – 2008", title: "Dallas Medical Center 가정의학과 주치의" },
@@ -38,7 +38,7 @@ export const doctors = [
     phone: "+19724235678",
     phoneDisplay: "(972) 423-5678",
     color: "bg-blue-500",
-    bio: "경희대학교 한의과대학을 졸업하고 미국 Texas에서 한방 면허를 취득한 감철우 원장은 전통 한의학과 현대 의학의 접목을 통해 달라스 한인들의 건강을 돌보고 있습니다. 통증 관리, 스트레스 완화, 소화기 질환 등 다양한 분야에서 풍부한 임상 경험을 보유하고 있습니다.",
+    bio: "00대학교 한의과대학을 졸업하고 미국 Texas에서 한방 면허를 취득한 감철우 원장은 전통 한의학과 현대 의학의 접목을 통해 달라스 한인들의 건강을 돌보고 있습니다. 통증 관리, 스트레스 완화, 소화기 질환 등 다양한 분야에서 풍부한 임상 경험을 보유하고 있습니다.",
     education: [
       { year: "1998", title: "경희대학교 한의과대학 졸업 (한의학 박사)" },
       { year: "2001", title: "대한한의사협회 침술 전문 수료" },
