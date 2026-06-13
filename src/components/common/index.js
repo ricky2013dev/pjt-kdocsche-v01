@@ -7,3 +7,4 @@ export { default as Textarea } from './Textarea';
 export { default as FormSection } from './FormSection';
 export { default as Card } from './Card';
 export { default as Tabs } from './Tabs';
+export { default as AlertModal } from './AlertModal';
