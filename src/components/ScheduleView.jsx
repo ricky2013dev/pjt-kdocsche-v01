@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onChangeDoctor }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [view, setView] = useState("weekly");
+  const [view, setView] = useState("daily");
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -44,7 +44,8 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
 
   const changeWeekOrMonth = (direction) => {
     const d = new Date(currentMonth);
-    if (view === "weekly") d.setDate(d.getDate() + direction * 7);
+    if (view === "daily") d.setDate(d.getDate() + direction);
+    else if (view === "weekly") d.setDate(d.getDate() + direction * 7);
     else d.setMonth(d.getMonth() + direction);
     setCurrentMonth(d);
   };
@@ -201,13 +202,85 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
     return days;
   };
 
-  const rangeLabel = view === "weekly"
-    ? `${currentMonth.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${
-        new Date(currentMonth.getTime() + 6 * 86400000).toLocaleDateString("en-US", {
-          month: "short", day: "numeric", year: "numeric",
-        })
-      }`
-    : currentMonth.toLocaleDateString("en-US", { month: isMobile ? "short" : "long", year: "numeric" });
+  // ── Daily calendar ───────────────────────────────────────
+  const renderDailyCalendar = () => {
+    const date = new Date(currentMonth);
+    date.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isToday = date.getTime() === today.getTime();
+    const isSun = date.getDay() === 0;
+    const isPast = date < today;
+
+    const times = [];
+    for (let h = 9; h <= 17; h++) {
+      times.push(`${h % 12 || 12}:00 ${h < 12 ? "AM" : "PM"}`);
+      if (h < 17) times.push(`${h % 12 || 12}:30 ${h < 12 ? "AM" : "PM"}`);
+    }
+
+    return (
+      <div className="overflow-y-auto max-h-[520px] md:max-h-[600px] rounded-xl border border-slate-100">
+        {/* Day header */}
+        <div
+          className={`sticky top-0 z-10 px-4 py-2 border-b border-slate-100 flex items-center ${
+            isToday ? "bg-teal-600" : "bg-slate-50"
+          }`}
+        >
+          <p className={`text-sm font-semibold ${isToday ? "text-white" : "text-slate-700"}`}>
+            {date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+          </p>
+        </div>
+
+        {/* Time slots */}
+        <div className="divide-y divide-slate-100">
+          {times.map((time, tIdx) => {
+            const isAvail = !isSun && !isPast && Math.random() > 0.4;
+            const slot = {
+              date: date.toDateString(),
+              time,
+              datetime: `${date.toLocaleDateString()} at ${time}`,
+              available: isAvail,
+            };
+            return (
+              <div key={tIdx} className="grid grid-cols-[90px_1fr] items-stretch">
+                <div className="pr-4 text-right text-xs text-slate-400 font-medium bg-slate-50 py-3 border-r border-slate-100 flex items-center justify-end">
+                  {time}
+                </div>
+                <div className="px-3 py-2">
+                  <div
+                    onClick={() => handleSlotClick(slot)}
+                    className={`rounded-lg h-10 flex items-center justify-center text-sm font-semibold transition-all border ${
+                      isAvail
+                        ? "bg-teal-500 text-white border-teal-600 cursor-pointer hover:bg-teal-600 hover:shadow-md hover:scale-[1.01]"
+                        : isPast || isSun
+                        ? "bg-white border-slate-100 text-slate-200"
+                        : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
+                    }`}
+                  >
+                    {isAvail ? "예약" : isPast || isSun ? "" : <span className="text-xs">N/A</span>}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const rangeLabel =
+    view === "daily"
+      ? currentMonth.toLocaleDateString("en-US", isMobile
+          ? { weekday: "short", month: "short", day: "numeric" }
+          : { weekday: "long", month: "long", day: "numeric", year: "numeric" }
+        )
+      : view === "weekly"
+      ? `${currentMonth.toLocaleDateString("en-US", { month: "short", day: "numeric" })} – ${
+          new Date(currentMonth.getTime() + 6 * 86400000).toLocaleDateString("en-US", {
+            month: "short", day: "numeric", year: "numeric",
+          })
+        }`
+      : currentMonth.toLocaleDateString("en-US", { month: isMobile ? "short" : "long", year: "numeric" });
 
   return (
     <div className="space-y-4">
@@ -238,42 +311,44 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
 
 
 
-      {/* Controls row */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+      {/* Controls row — always single line */}
+      <div className="flex flex-row items-center justify-between gap-2 mb-5">
 
-        {/* View toggle */}
-        <div className="inline-flex bg-slate-100 rounded-xl p-1 gap-1">
-          {["weekly", "monthly"].map((v) => (
-            <button
-              key={v}
-              onClick={() => setView(v)}
-              className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${
-                view === v
-                  ? "bg-white text-teal-700 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700"
-              }`}
-            >
-              {v === "weekly" ? "주간" : "월간"}
-            </button>
-          ))}
+        {/* View dropdown */}
+        <div className="relative shrink-0">
+          <select
+            value={view}
+            onChange={(e) => setView(e.target.value)}
+            className="appearance-none bg-white border border-slate-200 text-slate-700 text-xs md:text-sm font-semibold rounded-xl px-3 md:px-4 py-2 pr-8 shadow-sm hover:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all cursor-pointer"
+          >
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+          <svg
+            className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
         </div>
 
         {/* Date navigation */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
           <button
             onClick={() => changeWeekOrMonth(-1)}
-            className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
+            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <span className="font-bold text-slate-700 text-sm md:text-base min-w-[180px] md:min-w-[240px] text-center">
+          <span className="font-bold text-slate-700 text-xs md:text-base text-center truncate min-w-0">
             {rangeLabel}
           </span>
           <button
             onClick={() => changeWeekOrMonth(1)}
-            className="w-9 h-9 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
+            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg className="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </div>
       </div>
@@ -290,6 +365,8 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
             {renderMonthlyCalendar()}
           </div>
         </>
+      ) : view === "daily" ? (
+        renderDailyCalendar()
       ) : (
         renderWeeklyCalendar()
       )}

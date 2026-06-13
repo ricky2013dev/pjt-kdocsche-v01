@@ -148,9 +148,7 @@ const HomePage = ({ onReserve, onReserveWithDoctor }) => {
               온라인 진료 예약 서비스
             </p>
           </div>
-          <p className="text-teal-100 text-sm md:text-base mb-3 leading-relaxed">
-            달라스 지역의 한인 의사 선생님과 편리하게 온라인으로 진료 예약을 하세요.
-          </p>
+
           <p className="text-teal-200/70 text-xs md:text-sm mb-8">
             Your trusted Korean medical network in Dallas–Fort Worth.
           </p>
@@ -200,39 +198,42 @@ const HomePage = ({ onReserve, onReserveWithDoctor }) => {
           </div>
 
           {/* Doctor Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
+          <div className="grid grid-cols-1 gap-3 md:gap-4">
             {doctors.map((doc) => (
               <div
                 key={doc.name}
-                className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:shadow-md hover:border-teal-200 transition-all flex flex-col items-center text-center gap-2"
+                className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:shadow-md hover:border-teal-200 transition-all flex flex-row items-center gap-4"
               >
                 <DoctorAvatar initials={doc.initials} color={doc.color} />
-                <div>
-                  <p className="font-bold text-slate-800 text-sm md:text-base">
-                    {doc.name}
-                  </p>
-                  <p className="text-teal-600 text-xs md:text-sm font-medium">
-                    {doc.specialty}
-                  </p>
-                </div>
-
-   
-
-     
-
-                <div className="mt-1 w-full flex gap-2">
-                  <button
-                    onClick={() => setSelectedDoctor(doc)}
-                    className="flex-1 text-xs font-semibold text-slate-600 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50 transition-colors"
-                  >
-                    상세보기
-                  </button>
-                  <button
-                    onClick={() => onReserveWithDoctor ? onReserveWithDoctor(doc) : onReserve()}
-                    className="flex-1 text-xs font-semibold text-teal-600 border border-teal-300 rounded-lg px-3 py-1.5 hover:bg-teal-50 transition-colors"
-                  >
-                    예약하기
-                  </button>
+                <div className="flex flex-col flex-1 gap-2.5">
+                  <div>
+                    <p className="font-bold text-slate-800 text-sm md:text-base">{doc.name}</p>
+                    <p className="text-teal-600 text-xs font-medium mt-0.5">{doc.specialty} · {doc.city}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {doc.services.slice(0, 2).map((s, i) => (
+                      <span
+                        key={i}
+                        className="bg-teal-50 text-teal-700 text-[10px] font-medium px-2 py-0.5 rounded-full border border-teal-100 leading-snug"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      onClick={() => setSelectedDoctor(doc)}
+                      className="text-[10px] font-semibold text-slate-500 bg-slate-100 rounded-md px-2.5 py-1 hover:bg-slate-200 transition-colors"
+                    >
+                      상세보기
+                    </button>
+                    <button
+                      onClick={() => onReserveWithDoctor ? onReserveWithDoctor(doc) : onReserve()}
+                      className="text-[10px] font-semibold text-white bg-teal-500 rounded-md px-2.5 py-1 hover:bg-teal-600 transition-colors shadow-sm"
+                    >
+                      예약하기
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
