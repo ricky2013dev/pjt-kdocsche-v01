@@ -18,13 +18,13 @@ const Field = ({ label, required, children }) => (
 );
 
 const inputCls =
-  "w-full border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors placeholder:text-slate-400";
+  "w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all placeholder:text-slate-400 shadow-sm hover:border-slate-300";
 
 const SectionCard = ({ title, children }) => (
-  <div className="bg-slate-50 rounded-2xl border border-slate-100 p-4 md:p-6">
+  <div className="bg-white rounded-2xl border border-slate-100 p-4 md:p-6 shadow-sm">
     {title && (
-      <h3 className="text-base md:text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-        <span className="w-1 h-5 rounded-full bg-teal-500 inline-block" />
+      <h3 className="text-sm md:text-base font-bold text-slate-800 mb-4 flex items-center gap-2.5">
+        <span className="w-1 h-5 rounded-full bg-gradient-to-b from-blue-600 to-indigo-600 inline-block" />
         {title}
       </h3>
     )}
@@ -37,8 +37,8 @@ const CheckItem = ({ id, name, checked, onChange, label, bold }) => (
     htmlFor={id}
     className={`flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all ${
       checked
-        ? "bg-teal-50 border-teal-200"
-        : "bg-white border-slate-200 hover:border-teal-200"
+        ? "bg-blue-50 border-blue-200"
+        : "bg-white border-slate-200 hover:border-blue-200"
     }`}
   >
     <div className="relative flex-shrink-0 mt-0.5">
@@ -52,7 +52,7 @@ const CheckItem = ({ id, name, checked, onChange, label, bold }) => (
       />
       <div
         className={`w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all ${
-          checked ? "bg-teal-600 border-teal-600" : "border-slate-300 bg-white"
+          checked ? "bg-blue-600 border-blue-600" : "border-slate-300 bg-white"
         }`}
       >
         {checked && (
@@ -121,7 +121,7 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
   };
 
   const CalIcon = () => (
-    <svg className="w-4 h-4 text-teal-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-4 h-4 text-blue-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
     </svg>
   );
@@ -130,14 +130,14 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
     return (
       <div
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-3 bg-teal-50 border border-teal-200 rounded-xl px-4 py-3 mb-6 cursor-pointer hover:bg-teal-100 transition-colors group"
+        className="flex items-center gap-3 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 mb-6 cursor-pointer hover:bg-blue-100 transition-colors group"
       >
         <CalIcon />
         <div className="flex-1 min-w-0">
-          <p className="text-xs text-teal-600 font-medium">선택된 예약 시간</p>
-          <p className="text-sm font-bold text-teal-800 truncate">{selectedSlot.datetime}</p>
+          <p className="text-xs text-blue-600 font-medium">선택된 예약 시간</p>
+          <p className="text-sm font-bold text-blue-800 truncate">{selectedSlot.datetime}</p>
         </div>
-        <span className="shrink-0 text-xs font-semibold text-teal-600 border border-teal-200 rounded-lg px-3 py-1.5 bg-white group-hover:border-teal-300 transition-colors">
+        <span className="shrink-0 text-xs font-semibold text-blue-600 border border-blue-200 rounded-lg px-3 py-1.5 bg-white group-hover:border-blue-300 transition-colors">
           변경
         </span>
       </div>
@@ -147,9 +147,9 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
   const timeSlots = selectedDate ? getTimeSlots(selectedDate) : [];
 
   return (
-    <div className="border border-teal-200 rounded-2xl bg-gradient-to-b from-teal-50 to-white p-4 mb-6">
+    <div className="border border-blue-200 rounded-2xl bg-gradient-to-b from-blue-50 to-white p-4 mb-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-bold text-teal-800 flex items-center gap-2">
+        <h3 className="text-sm font-bold text-blue-800 flex items-center gap-2">
           <CalIcon />
           진료 일정 선택
           <span className="text-red-400">*</span>
@@ -158,7 +158,7 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-white hover:text-teal-600 transition-all"
+            className="text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-white hover:text-blue-600 transition-all"
           >
             Cancel
           </button>
@@ -212,12 +212,12 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
               onClick={() => !isDisabled && setSelectedDate(d)}
               className={`py-1.5 rounded-lg text-xs font-semibold transition-all text-center ${
                 isSelected
-                  ? "bg-teal-600 text-white shadow-sm"
+                  ? "bg-blue-600 text-white shadow-sm"
                   : isToday
-                  ? "bg-teal-100 text-teal-700 ring-1 ring-teal-400"
+                  ? "bg-blue-100 text-blue-700 ring-1 ring-blue-400"
                   : isDisabled
                   ? "text-slate-300 cursor-not-allowed"
-                  : "bg-white hover:bg-teal-100 text-slate-700 hover:text-teal-700"
+                  : "bg-white hover:bg-blue-100 text-slate-700 hover:text-blue-700"
               }`}
             >
               {day}
@@ -232,20 +232,20 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
           <p className="text-xs font-semibold text-slate-500 mb-2.5">
             {selectedDate.toLocaleDateString("ko-KR", { month: "long", day: "numeric" })} 예약 가능 시간
           </p>
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
             {timeSlots.map((ts, i) => (
               <button
                 key={i}
                 type="button"
                 disabled={!ts.available}
                 onClick={() => handleTimeSelect(ts)}
-                className={`py-2 rounded-lg text-xs font-semibold transition-all ${
+                className={`py-3 rounded-xl text-xs font-bold transition-all ${
                   ts.available
-                    ? "bg-teal-500 text-white hover:bg-teal-600 active:scale-95"
+                    ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-sm active:scale-95"
                     : "bg-slate-100 text-slate-400 cursor-not-allowed"
                 }`}
               >
-                {ts.available ? ts.time : `${ts.time} (불가)`}
+                {ts.available ? ts.time : <span className="text-[10px]">불가</span>}
               </button>
             ))}
           </div>
@@ -261,7 +261,7 @@ const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
 };
 
 // ── Main Component ───────────────────────────────────────────
-const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSubmit, initialData }) => {
+const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onChangeDoctor, onSubmit, initialData }) => {
   const [activeTab, setActiveTab] = useState("personal");
   const [formData, setFormData] = useState(initialData || dummyPatientData);
   const [alertMsg, setAlertMsg] = useState(null);
@@ -334,7 +334,7 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 md:p-6">
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 md:p-7">
 
       <AlertModal
         open={!!alertMsg}
@@ -347,22 +347,26 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
 
       {/* Selected Doctor Banner */}
       {selectedDoctor && (
-        <div className="flex items-center justify-between gap-4 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 mb-4">
+        <div className="flex items-center justify-between gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 rounded-2xl px-4 py-3.5 mb-5">
           <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0 ${selectedDoctor.color}`}>
-              {selectedDoctor.initials}
+            <div className="relative shrink-0">
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white text-sm font-black shadow-md ${selectedDoctor.color}`}>
+                {selectedDoctor.initials}
+              </div>
+              <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full" />
             </div>
             <div>
               <p className="font-bold text-slate-800 text-sm">{selectedDoctor.name}</p>
-              <p className="text-teal-600 text-xs font-medium">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
+              <p className="text-blue-600 text-xs font-semibold mt-0.5">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
             </div>
           </div>
           <button
             type="button"
-            onClick={onBack}
-            className="shrink-0 text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-white hover:text-teal-600 hover:border-teal-200 transition-all"
+            onClick={onChangeDoctor}
+            className="shrink-0 text-xs font-bold text-blue-600 bg-white border border-blue-200 rounded-xl px-3 py-2 hover:bg-blue-50 hover:border-blue-300 transition-all flex items-center gap-1.5 shadow-sm"
           >
-            변경
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            의사 변경
           </button>
         </div>
       )}
@@ -372,8 +376,8 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
 
       {!selectedSlot && (
         <div className="flex flex-col items-center justify-center py-14 text-center">
-          <div className="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center mb-4">
-            <svg className="w-7 h-7 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mb-4">
+            <svg className="w-7 h-7 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
           </div>
@@ -385,15 +389,15 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
 
       {selectedSlot && <>
       {/* Tab bar */}
-      <div className="flex gap-1 overflow-x-auto pb-1 mb-6 border-b border-slate-100">
+      <div className="flex gap-1 overflow-x-auto pb-0 mb-5 bg-slate-100 rounded-2xl p-1">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1.5 px-3 md:px-4 py-2.5 text-xs md:text-sm font-semibold whitespace-nowrap rounded-t-lg border-b-2 transition-all -mb-px ${
+            className={`flex items-center gap-1.5 px-3 py-2.5 text-xs font-bold whitespace-nowrap rounded-xl flex-1 justify-center transition-all ${
               activeTab === tab.id
-                ? "border-teal-600 text-teal-700 bg-teal-50"
-                : "border-transparent text-slate-500 hover:text-slate-700 hover:bg-slate-50"
+                ? "bg-white text-blue-700 shadow-sm"
+                : "text-slate-500 hover:text-slate-700"
             }`}
           >
             {tab.label}
@@ -401,7 +405,7 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
               <span className="w-1.5 h-1.5 rounded-full bg-red-400 inline-block" />
             )}
             {tab.completed && (
-              <svg className="w-3.5 h-3.5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="w-3.5 h-3.5 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             )}
@@ -462,7 +466,7 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
             <div className="flex items-start justify-between mb-4">
               <div>
                 <h3 className="text-base md:text-lg font-bold text-slate-700 flex items-center gap-2">
-                  <span className="w-1 h-5 rounded-full bg-teal-500 inline-block" />
+                  <span className="w-1 h-5 rounded-full bg-blue-500 inline-block" />
                   진료 전 체크리스트
                   <span className="text-red-400">*</span>
                 </h3>
@@ -523,21 +527,20 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
 
         {/* Navigation buttons */}
         <div className="flex justify-between gap-3 mt-6 pt-5 border-t border-slate-100">
-          {/* Left: back + prev */}
           <div className="flex gap-2">
             <button
               type="button"
               onClick={onBack}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-              <span className="hidden sm:inline">Back To Home</span>
+              <span className="hidden sm:inline">홈으로</span>
             </button>
             {!isFirstTab && (
               <button
                 type="button"
                 onClick={() => setActiveTab(tabs[currentIdx - 1].id)}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm"
+                className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-all shadow-sm"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
                 이전
@@ -545,12 +548,11 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
             )}
           </div>
 
-          {/* Right: next / submit */}
           {!isLastTab ? (
             <button
               type="button"
               onClick={() => setActiveTab(tabs[currentIdx + 1].id)}
-              className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-bold transition-all shadow-sm active:scale-[0.98]"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold transition-all shadow-md active:scale-[0.98]"
             >
               다음
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -558,10 +560,10 @@ const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSub
           ) : (
             <button
               type="submit"
-              className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-bold transition-all shadow-sm active:scale-[0.98]"
+              className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-bold transition-all shadow-md active:scale-[0.98]"
             >
-              예약 완료
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              예약 완료
             </button>
           )}
         </div>

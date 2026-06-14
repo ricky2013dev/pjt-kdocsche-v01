@@ -4,7 +4,7 @@ const AboutUs = ({ onClose }) => {
   return (
     <Card>
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-teal-600 mb-1">K Doctor Online</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-blue-600 mb-1">K Doctor Online</h2>
         <p className="text-slate-500 text-sm mb-6">Korean Virtual Doctor Service</p>
 
         {/* English Section */}
@@ -62,7 +62,7 @@ const AboutUs = ({ onClose }) => {
         </div>
 
         {/* Contact Information */}
-        <div className="bg-teal-50 p-4 md:p-6 rounded-lg mb-6 border border-teal-100">
+        <div className="bg-blue-50 p-4 md:p-6 rounded-lg mb-6 border border-blue-100">
           <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-3">Contact Us · 연락처</h3>
           <div className="text-sm md:text-base text-gray-700 space-y-2">
             <p><strong>Email · 이메일:</strong> support@kdoctoronline.com</p>

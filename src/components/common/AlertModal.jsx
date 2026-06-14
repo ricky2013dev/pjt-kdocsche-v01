@@ -13,7 +13,7 @@ const ICONS = {
     </svg>
   ),
   success: (
-    <svg className="w-7 h-7 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg className="w-7 h-7 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
   ),
@@ -27,7 +27,7 @@ const ICONS = {
 const BG = {
   warning: "bg-amber-50",
   error:   "bg-red-50",
-  success: "bg-teal-50",
+  success: "bg-blue-50",
   info:    "bg-blue-50",
 };
 
@@ -94,7 +94,7 @@ const AlertModal = ({
           )}
           <button
             onClick={onConfirm}
-            className="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-bold py-2.5 rounded-xl transition-all active:scale-[0.98] text-sm"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all active:scale-[0.98] text-sm"
           >
             {confirmLabel}
           </button>

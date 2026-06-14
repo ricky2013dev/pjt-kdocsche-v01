@@ -7,7 +7,7 @@ export const doctors = [
     address: "화상 진료 — 미국 전역 서비스",
     phone: "+19724921234",
     phoneDisplay: "(972) 492-1234",
-    color: "bg-teal-500",
+    color: "bg-blue-600",
     bio: "20년 이상 가정의학과 전문의로 활동해온 백00 원장은 K Doctor Online을 통해 미국 전역 한인 환자들에게 화상 진료를 제공합니다. 한국어와 영어로 진료가 가능하며 한인 이민자 및 가족 전체를 위한 종합적인 온라인 의료 서비스를 제공합니다.",
     education: [
       { year: "1995", title: "00대학교 의과대학 졸업 (M.D.)" },

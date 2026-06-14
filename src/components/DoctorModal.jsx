@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const Section = ({ title, children }) => (
   <div>
     <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-      <span className="w-1 h-4 rounded-full bg-teal-500 inline-block"></span>
+      <span className="w-1 h-4 rounded-full bg-blue-500 inline-block"></span>
       {title}
     </h3>
     {children}
@@ -106,7 +106,7 @@ const DoctorModal = ({ doctor, onClose, onReserve }) => {
             <ol className="space-y-3">
               {doctor.education.map((item) => (
                 <li key={item.year} className="flex gap-3 items-start">
-                  <span className="text-xs font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-md shrink-0 mt-0.5">
+                  <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md shrink-0 mt-0.5">
                     {item.year}
                   </span>
                   <span className="text-sm text-slate-700">{item.title}</span>
@@ -117,11 +117,11 @@ const DoctorModal = ({ doctor, onClose, onReserve }) => {
 
           {/* Career */}
           <Section title="경력">
-            <ol className="relative border-l-2 border-teal-100 ml-2 space-y-4">
+            <ol className="relative border-l-2 border-blue-100 ml-2 space-y-4">
               {doctor.career.map((item) => (
                 <li key={item.year} className="pl-5 relative">
-                  <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-teal-500 border-2 border-white shadow-sm"></span>
-                  <p className="text-xs text-teal-600 font-semibold">{item.year}</p>
+                  <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-blue-500 border-2 border-white shadow-sm"></span>
+                  <p className="text-xs text-blue-600 font-semibold">{item.year}</p>
                   <p className="text-sm text-slate-700 mt-0.5">{item.title}</p>
                 </li>
               ))}
@@ -147,7 +147,7 @@ const DoctorModal = ({ doctor, onClose, onReserve }) => {
         <div className="px-6 py-4 border-t border-slate-100 bg-white">
           <button
             onClick={() => { onClose(); onReserve(); }}
-            className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-xl transition-colors text-sm shadow-sm active:scale-[0.98]"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl transition-colors text-sm shadow-sm active:scale-[0.98]"
           >
             이 의사 선생님으로 예약하기
           </button>

@@ -82,7 +82,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
               <div
                 key={`hdr-${i}`}
                 className={`py-2.5 text-center border-b border-l border-slate-100 sticky top-0 z-10 ${
-                  isToday ? "bg-teal-600 text-white" : "bg-slate-50 text-slate-600"
+                  isToday ? "bg-blue-600 text-white" : "bg-slate-50 text-slate-600"
                 } ${isSun ? "opacity-40" : ""}`}
               >
                 <p className="text-[10px] md:text-xs font-semibold uppercase tracking-wide">
@@ -122,7 +122,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
                     onClick={() => handleSlotClick(slot)}
                     className={`m-0.5 rounded-lg min-h-[34px] md:min-h-[38px] flex items-center justify-center text-xs font-semibold transition-all border ${
                       isAvail
-                        ? "bg-teal-500 text-white border-teal-600 cursor-pointer hover:bg-teal-600 hover:shadow-md hover:scale-[1.04]"
+                        ? "bg-blue-500 text-white border-blue-600 cursor-pointer hover:bg-blue-600 hover:shadow-md hover:scale-[1.04]"
                         : isPast || isSun
                         ? "bg-white border-slate-100 text-slate-200"
                         : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
@@ -172,13 +172,13 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
           key={day}
           className={`rounded-xl border p-1.5 md:p-2.5 min-h-[80px] md:min-h-[110px] transition-colors ${
             isToday
-              ? "border-teal-400 bg-teal-50"
+              ? "border-blue-400 bg-blue-50"
               : isPast || isSun
               ? "border-slate-100 bg-slate-50 opacity-50"
-              : "border-slate-200 bg-white hover:border-teal-200"
+              : "border-slate-200 bg-white hover:border-blue-200"
           }`}
         >
-          <p className={`text-xs md:text-sm font-bold mb-1 ${isToday ? "text-teal-600" : "text-slate-600"}`}>
+          <p className={`text-xs md:text-sm font-bold mb-1 ${isToday ? "text-blue-600" : "text-slate-600"}`}>
             {day}
           </p>
           {slots.map((slot, idx) => (
@@ -187,7 +187,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
               onClick={() => handleSlotClick(slot)}
               className={`text-[10px] md:text-xs py-0.5 px-1 md:px-1.5 my-0.5 rounded-md font-semibold border transition-all ${
                 slot.available
-                  ? "bg-teal-500 text-white border-teal-600 cursor-pointer hover:bg-teal-600 hover:shadow-sm"
+                  ? "bg-blue-500 text-white border-blue-600 cursor-pointer hover:bg-blue-600 hover:shadow-sm"
                   : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
               }`}
             >
@@ -223,7 +223,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
         {/* Day header */}
         <div
           className={`sticky top-0 z-10 px-4 py-2 border-b border-slate-100 flex items-center ${
-            isToday ? "bg-teal-600" : "bg-slate-50"
+            isToday ? "bg-blue-600" : "bg-slate-50"
           }`}
         >
           <p className={`text-sm font-semibold ${isToday ? "text-white" : "text-slate-700"}`}>
@@ -251,7 +251,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
                     onClick={() => handleSlotClick(slot)}
                     className={`rounded-lg h-10 flex items-center justify-center text-sm font-semibold transition-all border ${
                       isAvail
-                        ? "bg-teal-500 text-white border-teal-600 cursor-pointer hover:bg-teal-600 hover:shadow-md hover:scale-[1.01]"
+                        ? "bg-blue-500 text-white border-blue-600 cursor-pointer hover:bg-blue-600 hover:shadow-md hover:scale-[1.01]"
                         : isPast || isSun
                         ? "bg-white border-slate-100 text-slate-200"
                         : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
@@ -295,7 +295,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
           <div>
          
             <p className="font-bold text-slate-800 text-sm md:text-base">{selectedDoctor.name}</p>
-            <p className="text-teal-600 text-xs font-medium">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
+            <p className="text-blue-600 text-xs font-medium">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
           </div>
         </div>
 
@@ -314,7 +314,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
           <select
             value={view}
             onChange={(e) => setView(e.target.value)}
-            className="appearance-none bg-white border border-slate-200 text-slate-700 text-xs md:text-sm font-semibold rounded-xl px-3 md:px-4 py-2 pr-8 shadow-sm hover:border-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-teal-400 transition-all cursor-pointer"
+            className="appearance-none bg-white border border-slate-200 text-slate-700 text-xs md:text-sm font-semibold rounded-xl px-3 md:px-4 py-2 pr-8 shadow-sm hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all cursor-pointer"
           >
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
@@ -332,7 +332,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
         <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
           <button
             onClick={() => changeWeekOrMonth(-1)}
-            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
+            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-blue-600 transition-all shadow-sm"
           >
             <svg className="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
@@ -341,7 +341,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
           </span>
           <button
             onClick={() => changeWeekOrMonth(1)}
-            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-teal-600 transition-all shadow-sm"
+            className="w-8 h-8 md:w-9 md:h-9 shrink-0 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-500 hover:text-blue-600 transition-all shadow-sm"
           >
             <svg className="w-3.5 h-3.5 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
@@ -369,7 +369,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
       {/* Legend */}
       <div className="mt-4 flex items-center justify-center gap-6 text-xs text-slate-500">
         <span className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded bg-teal-500 inline-block"></span>
+          <span className="w-3 h-3 rounded bg-blue-500 inline-block"></span>
           예약 가능
         </span>
         <span className="flex items-center gap-2">
