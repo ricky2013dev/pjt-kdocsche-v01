@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HomePage from "./components/HomePage";
 import DoctorSelectPage from "./components/DoctorSelectPage";
-import ScheduleView from "./components/ScheduleView";
 import ReservePage from "./components/ReservePage";
 import ConfirmationPage from "./components/ConfirmationPage";
 import MyAppointmentsPage from "./components/MyAppointmentsPage";
@@ -109,18 +108,6 @@ function App() {
 
   const handleSlotSelect = (slot) => setSelectedSlot(slot);
 
-  const handleNextToReserve = () => {
-    if (selectedSlot) {
-      setStep(2);
-      window.scrollTo(0, 0);
-    }
-  };
-
-  const handleBackToSchedule = () => {
-    setStep(1);
-    window.scrollTo(0, 0);
-  };
-
   const handleFormSubmit = (formData) => {
     if (editingAppointment) {
       // Update existing appointment
@@ -151,7 +138,7 @@ function App() {
       setAppointments(prev => [...prev, newAppt]);
       setConfirmCode(code);
       setPatientData(formData);
-      setStep(3);
+      setStep(2);
       window.scrollTo(0, 0);
     }
   };
@@ -183,12 +170,10 @@ function App() {
   // Sub-header label for the reserve view
   const isEditing = !!editingAppointment;
   const reserveSubtitle = !selectedDoctor
-    ? { title: "의사 선생님 선택", sub: "예약할 의사 선생님을 먼저 선택해주세요" }
+    ? { title: "의사 선생님 선택", sub: "화상 진료를 받으실 의사 선생님을 먼저 선택해주세요" }
     : step === 1
-    ? { title: isEditing ? "일정 수정" : "예약 일정", sub: isEditing ? "새로운 날짜와 시간을 선택해주세요" : "원하시는 날짜와 시간을 선택하세요" }
-    : step === 2
-    ? { title: "환자 정보 입력", sub: "예약에 필요한 정보를 입력해주세요" }
-    : { title: "예약 완료", sub: "예약이 성공적으로 접수되었습니다" };
+    ? { title: isEditing ? "예약 수정" : "예약 정보 입력", sub: isEditing ? "정보를 수정하고 새로운 날짜와 시간을 선택해주세요" : "상단에서 날짜와 시간을 먼저 선택해주세요" }
+    : { title: "예약 완료", sub: "화상 진료 예약이 성공적으로 접수되었습니다" };
 
   const navLinks = [
     { label: "홈",      target: "home",    active: view === "home" },
@@ -210,8 +195,8 @@ function App() {
                 </svg>
               </div>
               <div className="leading-tight">
-                <span className="font-black text-teal-700 text-base md:text-lg tracking-tight">KDS Dallas</span>
-                <span className="hidden md:block text-[10px] text-slate-400 font-medium -mt-0.5">Korean Doctor Services</span>
+                <span className="font-black text-teal-700 text-base md:text-lg tracking-tight">K Doctor Online</span>
+                <span className="hidden md:block text-[10px] text-slate-400 font-medium -mt-0.5">Korean Virtual Doctor Service</span>
               </div>
             </button>
 
@@ -302,30 +287,20 @@ function App() {
               <DoctorSelectPage onSelect={handleDoctorSelect} />
             )}
 
-            {/* Step 1: schedule (doctor chosen) */}
+            {/* Step 1: patient info form with date picker at top */}
             {selectedDoctor && step === 1 && (
-              <ScheduleView
-                selectedSlot={selectedSlot}
-                onSlotSelect={handleSlotSelect}
-                onNext={handleNextToReserve}
-                selectedDoctor={selectedDoctor}
-                onChangeDoctor={() => setSelectedDoctor(null)}
-              />
-            )}
-
-            {/* Step 2: patient info form */}
-            {selectedDoctor && step === 2 && (
               <ReservePage
                 selectedSlot={selectedSlot}
+                onSlotSelect={handleSlotSelect}
                 selectedDoctor={selectedDoctor}
-                onBack={handleBackToSchedule}
+                onBack={() => navigateTo("home")}
                 onSubmit={handleFormSubmit}
                 initialData={editingAppointment?.patient}
               />
             )}
 
-            {/* Step 3: confirmation */}
-            {selectedDoctor && step === 3 && (
+            {/* Step 2: confirmation */}
+            {selectedDoctor && step === 2 && (
               <ConfirmationPage
                 selectedSlot={selectedSlot}
                 patientData={patientData}
@@ -349,11 +324,11 @@ function App() {
                 </svg>
               </div>
               <div className="leading-tight">
-                <span className="text-sm font-black text-slate-200 tracking-tight">KDS Dallas</span>
-                <span className="block text-[10px] text-slate-400">Korean Doctor Services</span>
+                <span className="text-sm font-black text-slate-200 tracking-tight">K Doctor Online</span>
+                <span className="block text-[10px] text-slate-400">Korean Virtual Doctor Service</span>
               </div>
             </div>
-            <p className="text-xs text-slate-400">© 2026 KDS Dallas. All rights reserved.</p>
+            <p className="text-xs text-slate-400">© 2026 K Doctor Online. All rights reserved.</p>
             <button onClick={() => navigateTo("about")} className="text-xs text-teal-400 hover:text-teal-300 transition-colors font-medium">
               About Us →
             </button>

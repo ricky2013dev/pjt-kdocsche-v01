@@ -298,12 +298,7 @@ const ScheduleView = ({ selectedSlot, onSlotSelect, onNext, selectedDoctor, onCh
             <p className="text-teal-600 text-xs font-medium">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
           </div>
         </div>
-        <button
-          onClick={onChangeDoctor}
-          className="shrink-0 text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-slate-50 hover:text-teal-600 hover:border-teal-200 transition-all"
-        >
-          의사 변경
-        </button>
+
       </div>
     )}
 

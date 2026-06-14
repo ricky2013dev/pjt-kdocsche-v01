@@ -68,8 +68,200 @@ const CheckItem = ({ id, name, checked, onChange, label, bold }) => (
   </label>
 );
 
+// ── Date/Time Picker ─────────────────────────────────────────
+const DateTimePicker = ({ selectedSlot, onSlotSelect }) => {
+  const [isOpen, setIsOpen] = useState(!selectedSlot);
+  const [pickerMonth, setPickerMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const year = pickerMonth.getFullYear();
+  const month = pickerMonth.getMonth();
+  const firstDow = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  const getTimeSlots = (date) => {
+    const dom = date.getDate();
+    const pool = [
+      { time: "9:00 AM",  available: true  },
+      { time: "9:30 AM",  available: false },
+      { time: "10:00 AM", available: true  },
+      { time: "10:30 AM", available: false },
+      { time: "11:00 AM", available: true  },
+      { time: "2:00 PM",  available: true  },
+      { time: "2:30 PM",  available: false },
+      { time: "3:00 PM",  available: true  },
+      { time: "3:30 PM",  available: true  },
+      { time: "4:00 PM",  available: false },
+    ];
+    const count = 3 + (dom % 3);
+    const start = dom % (pool.length - count);
+    return pool.slice(start, start + count);
+  };
+
+  const handleTimeSelect = (timeSlot) => {
+    if (!timeSlot.available || !selectedDate) return;
+    const slot = {
+      date: selectedDate.toDateString(),
+      time: timeSlot.time,
+      datetime: `${selectedDate.toLocaleDateString()} at ${timeSlot.time}`,
+      available: true,
+    };
+    onSlotSelect(slot);
+    setIsOpen(false);
+  };
+
+  const changeMonth = (dir) => {
+    const d = new Date(pickerMonth);
+    d.setMonth(d.getMonth() + dir);
+    setPickerMonth(d);
+    setSelectedDate(null);
+  };
+
+  const CalIcon = () => (
+    <svg className="w-4 h-4 text-teal-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+    </svg>
+  );
+
+  if (!isOpen && selectedSlot) {
+    return (
+      <div
+        onClick={() => setIsOpen(true)}
+        className="flex items-center gap-3 bg-teal-50 border border-teal-200 rounded-xl px-4 py-3 mb-6 cursor-pointer hover:bg-teal-100 transition-colors group"
+      >
+        <CalIcon />
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-teal-600 font-medium">선택된 예약 시간</p>
+          <p className="text-sm font-bold text-teal-800 truncate">{selectedSlot.datetime}</p>
+        </div>
+        <span className="shrink-0 text-xs font-semibold text-teal-600 border border-teal-200 rounded-lg px-3 py-1.5 bg-white group-hover:border-teal-300 transition-colors">
+          변경
+        </span>
+      </div>
+    );
+  }
+
+  const timeSlots = selectedDate ? getTimeSlots(selectedDate) : [];
+
+  return (
+    <div className="border border-teal-200 rounded-2xl bg-gradient-to-b from-teal-50 to-white p-4 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-bold text-teal-800 flex items-center gap-2">
+          <CalIcon />
+          진료 일정 선택
+          <span className="text-red-400">*</span>
+        </h3>
+        {selectedSlot && (
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className="text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-white hover:text-teal-600 transition-all"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+
+      {/* Month navigation */}
+      <div className="flex items-center justify-between mb-3 bg-white rounded-xl px-4 py-2.5 border border-slate-100">
+        <button
+          type="button"
+          onClick={() => changeMonth(-1)}
+          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span className="text-sm font-bold text-slate-700">
+          {pickerMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+        </span>
+        <button
+          type="button"
+          onClick={() => changeMonth(1)}
+          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-slate-100 text-slate-500 transition-colors"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      {/* Day headers */}
+      <div className="grid grid-cols-7 mb-1.5 text-center">
+        {["Su","Mo","Tu","We","Th","Fr","Sa"].map((d, i) => (
+          <div key={d} className={`text-[10px] font-bold py-1 ${i === 0 ? "text-red-400" : "text-slate-400"}`}>{d}</div>
+        ))}
+      </div>
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1 mb-3">
+        {Array.from({ length: firstDow }).map((_, i) => <div key={`e-${i}`} />)}
+        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((day) => {
+          const d = new Date(year, month, day);
+          d.setHours(0, 0, 0, 0);
+          const isToday = d.getTime() === today.getTime();
+          const isSun = d.getDay() === 0;
+          const isPast = d < today;
+          const isSelected = selectedDate && d.getTime() === selectedDate.getTime();
+          const isDisabled = isSun || isPast;
+          return (
+            <button
+              key={day}
+              type="button"
+              disabled={isDisabled}
+              onClick={() => !isDisabled && setSelectedDate(d)}
+              className={`py-1.5 rounded-lg text-xs font-semibold transition-all text-center ${
+                isSelected
+                  ? "bg-teal-600 text-white shadow-sm"
+                  : isToday
+                  ? "bg-teal-100 text-teal-700 ring-1 ring-teal-400"
+                  : isDisabled
+                  ? "text-slate-300 cursor-not-allowed"
+                  : "bg-white hover:bg-teal-100 text-slate-700 hover:text-teal-700"
+              }`}
+            >
+              {day}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Time slots */}
+      {selectedDate && (
+        <div className="bg-white rounded-xl border border-slate-100 p-3">
+          <p className="text-xs font-semibold text-slate-500 mb-2.5">
+            {selectedDate.toLocaleDateString("ko-KR", { month: "long", day: "numeric" })} 예약 가능 시간
+          </p>
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-1.5">
+            {timeSlots.map((ts, i) => (
+              <button
+                key={i}
+                type="button"
+                disabled={!ts.available}
+                onClick={() => handleTimeSelect(ts)}
+                className={`py-2 rounded-lg text-xs font-semibold transition-all ${
+                  ts.available
+                    ? "bg-teal-500 text-white hover:bg-teal-600 active:scale-95"
+                    : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                }`}
+              >
+                {ts.available ? ts.time : `${ts.time} (불가)`}
+              </button>
+            ))}
+          </div>
+          {timeSlots.every((ts) => !ts.available) && (
+            <p className="text-xs text-slate-400 text-center mt-2">이 날은 예약 가능한 시간이 없습니다.</p>
+          )}
+        </div>
+      )}
+
+
+    </div>
+  );
+};
+
 // ── Main Component ───────────────────────────────────────────
-const ReservePage = ({ selectedSlot, onBack, onSubmit, initialData }) => {
+const ReservePage = ({ selectedSlot, onSlotSelect, selectedDoctor, onBack, onSubmit, initialData }) => {
   const [activeTab, setActiveTab] = useState("personal");
   const [formData, setFormData] = useState(initialData || dummyPatientData);
   const [alertMsg, setAlertMsg] = useState(null);
@@ -134,6 +326,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit, initialData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!selectedSlot)                 { showAlert("진료 일정을 먼저 선택해주세요.", null); return; }
     if (!isMedicalChecklistComplete()) { showAlert("의료 체크리스트를 모두 확인해주세요.", "medical"); return; }
     if (!isPersonalInfoComplete())     { showAlert("개인정보를 모두 입력해주세요.", "personal"); return; }
     if (!isInsuranceInfoComplete())    { showAlert("보험정보를 입력해주세요.", "insurance"); return; }
@@ -152,22 +345,45 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit, initialData }) => {
         onCancel={handleAlertClose}
       />
 
-      {/* Page title */}
-      <h2 className="text-xl md:text-2xl font-bold text-slate-800 mb-4">
-        환자 정보 입력
-      </h2>
-
-      {/* Selected slot banner */}
-      <div className="flex items-center gap-3 bg-teal-50 border border-teal-100 rounded-xl px-4 py-3 mb-6">
-        <svg className="w-4 h-4 text-teal-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-        </svg>
-        <div>
-          <p className="text-xs text-teal-600 font-medium">선택된 예약 시간</p>
-          <p className="text-sm font-bold text-teal-800">{selectedSlot?.datetime}</p>
+      {/* Selected Doctor Banner */}
+      {selectedDoctor && (
+        <div className="flex items-center justify-between gap-4 bg-slate-50 border border-slate-100 rounded-xl px-4 py-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0 ${selectedDoctor.color}`}>
+              {selectedDoctor.initials}
+            </div>
+            <div>
+              <p className="font-bold text-slate-800 text-sm">{selectedDoctor.name}</p>
+              <p className="text-teal-600 text-xs font-medium">{selectedDoctor.specialty} · {selectedDoctor.city}</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={onBack}
+            className="shrink-0 text-xs font-semibold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 hover:bg-white hover:text-teal-600 hover:border-teal-200 transition-all"
+          >
+            변경
+          </button>
         </div>
-      </div>
+      )}
 
+      {/* Date/Time Picker */}
+      <DateTimePicker selectedSlot={selectedSlot} onSlotSelect={onSlotSelect} />
+
+      {!selectedSlot && (
+        <div className="flex flex-col items-center justify-center py-14 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center mb-4">
+            <svg className="w-7 h-7 text-teal-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </div>
+          <p className="text-slate-600 text-sm font-semibold mb-1">날짜와 시간을 먼저 선택해주세요</p>
+          <p className="text-slate-400 text-xs">진료 일정을 선택하면 환자 정보를 입력할 수 있습니다</p>
+
+        </div>
+      )}
+
+      {selectedSlot && <>
       {/* Tab bar */}
       <div className="flex gap-1 overflow-x-auto pb-1 mb-6 border-b border-slate-100">
         {tabs.map((tab) => (
@@ -315,7 +531,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit, initialData }) => {
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-600 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-              <span className="hidden sm:inline">일정으로</span>
+              <span className="hidden sm:inline">Back To Home</span>
             </button>
             {!isFirstTab && (
               <button
@@ -350,6 +566,7 @@ const ReservePage = ({ selectedSlot, onBack, onSubmit, initialData }) => {
           )}
         </div>
       </form>
+      </>}
     </div>
   );
 };
